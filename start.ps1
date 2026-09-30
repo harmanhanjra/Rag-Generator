@@ -1,10 +1,14 @@
 $ErrorActionPreference = 'Stop'
 $projectRoot = $PSScriptRoot
 $pythonPath = Join-Path $projectRoot '.venv\Scripts\python.exe'
+$runtimePython = Join-Path $projectRoot '.venv-runtime\Scripts\python.exe'
+if (Test-Path -LiteralPath $runtimePython) { $pythonPath = $runtimePython }
 $vitePath = Join-Path $projectRoot 'node_modules\vite\bin\vite.js'
 if (-not (Test-Path -LiteralPath $pythonPath) -or -not (Test-Path -LiteralPath $vitePath)) {
     throw 'Install the Python and Node dependencies described in README.md first.'
 }
+& $pythonPath -c 'import sys, ssl; assert sys.version_info >= (3,10), "Python 3.10+ is required"'
+if ($LASTEXITCODE -ne 0) { throw 'The Python environment is incompatible. Follow the clean environment setup in README.md.' }
 
 function Find-FreePort([int]$firstPort) {
     $candidatePort = $firstPort

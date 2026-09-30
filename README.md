@@ -6,6 +6,21 @@ A document-grounded question answering workspace. Create a workspace for any doc
 
 Requirements: Python 3.10+ and Node.js 20+.
 
+On Windows, use a Python 3.10+ installation to create a separate environment if
+an older `.venv` already exists. The launcher prefers `.venv-runtime`:
+
+```powershell
+py -3.12 -m venv .venv-runtime
+.\.venv-runtime\Scripts\python.exe -m pip install -r requirements.txt
+npm ci
+powershell -File .\start.ps1
+```
+
+Use `.\.venv-runtime\Scripts\python.exe -m unittest tests.test_rag -v`
+to run backend tests in this environment. Keep `.env` and `.rag-data/` private;
+neither is needed in a GitHub checkout. If your `python` command resolves to
+Anaconda 3.9, select a newer installation explicitly rather than reusing it.
+
 If dependencies are already installed, run `powershell -File .\start.ps1`.
 It starts both servers from this project and prints the app URL. If another app
 occupies the usual ports, it chooses available ports and connects the frontend

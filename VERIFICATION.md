@@ -1,5 +1,16 @@
 # Atlas verification — 29 September 2026
 
+## Reverification — 1 October 2026
+
+The existing `.venv` resolves to Anaconda Python 3.9 with a broken SSL DLL.
+A separate `.venv-runtime` was created using Python 3.12.10 and dependencies
+were installed from `requirements.txt`. All 16 backend regression tests and
+the production frontend build passed. The launcher now prefers this new
+environment and rejects incompatible runtimes before starting servers.
+The old environment, `.env`, and document store were preserved. GitHub CI
+was added for the same offline tests and build. Live NVIDIA/browser checks
+below describe the earlier run; they were not repeated in this step.
+
 All four requested RAG flows passed after the fixes below. Verification used
 the visible Comet browser, a real NVIDIA NIM connection, and isolated automated
 tests. The working app instance is http://127.0.0.1:5175/ with its backend on 8003.
